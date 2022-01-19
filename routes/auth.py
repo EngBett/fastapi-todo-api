@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.encoders import jsonable_encoder
 from fastapi_jwt_auth import AuthJWT
@@ -27,7 +29,8 @@ async def register(model: RegisterModel):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="user with that email exists")
 
         # Register User
-        new_user = User(email=model.email, full_name=model.full_name, password=generate_password_hash(model.password))
+        new_user = User(id=uuid4(), email=model.email, full_name=model.full_name,
+                        password=generate_password_hash(model.password))
         db.session.add(new_user)
         db.session.commit()
         return jsonable_encoder(new_user)
