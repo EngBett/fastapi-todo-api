@@ -1,13 +1,11 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.encoders import jsonable_encoder
-from fastapi_sqlalchemy import DBSessionMiddleware, db
 from fastapi_jwt_auth import AuthJWT
-from entities.schemas import RegisterModel, LoginModel
-from dotenv import load_dotenv
-
-from entities.models import User
+from fastapi_sqlalchemy import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
+from entities.models import User
+from entities.schemas import RegisterModel, LoginModel
 from settings import Settings
 
 auth_router = APIRouter(
